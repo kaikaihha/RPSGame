@@ -2,7 +2,7 @@ package com.rps;
 
 import java.util.Scanner;
 
-public class GuessGeam {
+public class GuessGame {
 
     private static String computer="";//表示电脑
     private static String person="";//表示用户
