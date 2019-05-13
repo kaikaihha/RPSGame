@@ -16,39 +16,121 @@ public class RPSGameV1 {
     //开始游戏
     public void startGame(){
         System.out.println("--------------猜拳游戏开始--------------");
-        System.out.println("请输入数字以选择游戏角色：1.快乐风男，2.快乐跑男，3.快乐球男");
+        System.out.println("游戏规则：1.剪刀，2.石头，3.布");
+        System.out.print("请输入数字以选择游戏角色：1.快乐风男，2.快乐跑男，3.快乐球男"+"\n你的选择：");
 
         Scanner input = new Scanner(System.in);
 
         int role = input.nextInt();
+
         judgeRole(role);
 
+        System.out.print("是否开始游戏？（Y/N）");
 
+        String isContinue = input.next();
+
+        while (isContinue.equals("y")||isContinue.equals("Y")){
+            int result = judgeWL( playerShow(input),bootShow());
+            System.out.println("\n结果：");
+            switch (result){
+                case 0:
+                    System.out.print("平局哦！");
+                    break;
+                case 1:
+                    System.out.print("实力不错，你赢了！");
+                    break;
+                case -1:
+                    System.out.print("真遗憾，惜败！");
+                    break;
+            }
+            System.out.print("是否继续猜拳？（Y/N）：");
+            isContinue = input.next();
+        }
+        endGame();
 
 
     }
 
     //结束游戏
     public void endGame(){
-
+        System.out.print("\n\n最终统计游戏结果：\n");
+        System.out.println("玩家角色："+RPSGameV1.PLAYERROLE);
+        if(RPSGameV1.PLAYERSCORE>RPSGameV1.BOOTSCORE){
+            System.out.print("恭喜你，赢了！得分："+RPSGameV1.PLAYERSCORE+"\n电脑得分："+RPSGameV1.BOOTSCORE);
+        }else if(RPSGameV1.PLAYERSCORE==RPSGameV1.BOOTSCORE){
+            System.out.print("平局哦！得分："+RPSGameV1.PLAYERSCORE+"\n电脑得分："+RPSGameV1.BOOTSCORE);
+        }else if(RPSGameV1.PLAYERSCORE<RPSGameV1.BOOTSCORE){
+            System.out.print("很遗憾，你输了！得分："+RPSGameV1.PLAYERSCORE+"\n电脑得分："+RPSGameV1.BOOTSCORE);
+        }
     }
 
     //电脑出拳
     public int bootShow(){
-
+        int show = 1+(int)(Math.random()*10)%3;
+        switch (show){
+            case 1:
+                System.out.print("\n电脑出石头");
+                break;
+            case 2:
+                System.out.print("\n电脑出剪刀");
+                break;
+            case 3:
+                System.out.print("\n电脑出布");
+                break;
+        }
+        return show;
     }
 
     //玩家出拳
-    public int playerShow(){
-
+    public int playerShow(Scanner scanner){
+        System.out.print("你出了：");
+        int playerFist = scanner.nextInt();
+        switch (playerFist){
+            case 1:
+                System.out.print("你出了石头");
+                break;
+            case 2:
+                System.out.print("你出了剪刀");
+                break;
+            case 3:
+                System.out.print("你出了布");
+                break;
+        }
+        return playerFist;
     }
 
     //
-    public int judgeWL(){
-
+    public int judgeWL(int playerFist,int bootFist){
+        if(playerFist==1&&bootFist==1){
+            return 0;
+        }else if(playerFist==1&&bootFist==2){
+            RPSGameV1.PLAYERSCORE++;
+            return 1;
+        }else if(playerFist==1&&bootFist==3){
+            RPSGameV1.BOOTSCORE++;
+            return -1;
+        }else if(playerFist==2&&bootFist==1){
+            RPSGameV1.BOOTSCORE++;
+            return -1;
+        }else if(playerFist==2&&bootFist==2){
+            return 0;
+        }else if(playerFist==2&&bootFist==3){
+            RPSGameV1.PLAYERSCORE++;
+            return 1;
+        }else if(playerFist==3&&bootFist==1){
+            RPSGameV1.PLAYERSCORE++;
+            return 1;
+        }else if(playerFist==3&&bootFist==2){
+            RPSGameV1.BOOTSCORE++;
+            return -1;
+        }else if(playerFist==3&&bootFist==3){
+            return 0;
+        }else {
+            return 2;
+        }
     }
 
-    public String judgeRole(int roleInt){
+    public void judgeRole(int roleInt){
         if(roleInt == 1){
             RPSGameV1.PLAYERROLE = "快乐风男";
         }else if(roleInt == 2){
