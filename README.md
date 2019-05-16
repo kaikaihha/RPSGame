@@ -9,3 +9,4 @@ This proj is a RPSGame.
 5. v6:Use thread and oop
 6: v6:Use thread,oop and GUI
 7. v7:Use Socket and all above.
+### This proj also include based-knowledge code of java
