@@ -19,36 +19,59 @@ public class RPSGameV1 {
         System.out.println("游戏规则：1.剪刀，2.石头，3.布");
         System.out.print("请输入数字以选择游戏角色：1.快乐风男，2.快乐跑男，3.快乐球男"+"\n你的选择：");
 
-        Scanner input = new Scanner(System.in);
 
-        int role = input.nextInt();
+        Scanner input = new Scanner(System.in);;
+        int role = 0;
+
+        while (true){
+            try{
+                role = input.nextInt();
+                break;
+            }catch (Exception e){
+                System.out.print("请不要输入除上述角色前标数字外字符！\n请重新输入：");
+                //写法一：input.next();
+
+                //写法二：
+                input = new Scanner(System.in);
+            }
+        }
 
         judgeRole(role);
 
         System.out.print("是否开始游戏？（Y/N）");
 
-        String isContinue = input.next();
 
-        while (isContinue.equals("y")||isContinue.equals("Y")){
-            int result = judgeWL( playerShow(input),bootShow());
-            System.out.println("\n结果：");
-            switch (result){
-                case 0:
-                    System.out.print("平局哦！");
+        while (true){
+            try{
+                String isContinue = input.next();
+                if(isContinue.equals("y")||isContinue.equals("Y")){
+                    while (isContinue.equals("y")||isContinue.equals("Y")){
+                        int result = judgeWL( playerShow(input),bootShow());
+                        System.out.println("\n结果：");
+                        switch (result){
+                            case 0:
+                                System.out.print("平局哦！");
+                                break;
+                            case 1:
+                                System.out.print("实力不错，你赢了！");
+                                break;
+                            case -1:
+                                System.out.print("真遗憾，惜败！");
+                                break;
+                        }
+                        System.out.print("是否继续猜拳？（Y/N）：");
+                        isContinue = input.next();
+                    }
+                }else if(isContinue.equals("n")||isContinue.equals("N")){
                     break;
-                case 1:
-                    System.out.print("实力不错，你赢了！");
-                    break;
-                case -1:
-                    System.out.print("真遗憾，惜败！");
-                    break;
+                }else {
+                    throw new Exception();
+                }
+            }catch (Exception e){
+                System.out.print("一定要输入'y'和'n'的大小写哦！\n请重新输入：");
             }
-            System.out.print("是否继续猜拳？（Y/N）：");
-            isContinue = input.next();
         }
         endGame();
-
-
     }
 
     //结束游戏
