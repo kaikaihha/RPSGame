@@ -3,6 +3,15 @@ package com.rps.v2.pojo;
 public class Player {
     private int score;
     private String role;
+    private int fist;
+
+    public int getFist() {
+        return fist;
+    }
+
+    public void setFist(int fist) {
+        this.fist = fist;
+    }
 
     public int getScore() {
         return score;

@@ -28,6 +28,7 @@ public class SumOdd {
 
     public static void sevenSum(){
         System.out.println("********************");
+        Long startTime = System.nanoTime();
         int counter = 0;
         int sum = 0;
         for(int i=1;i<10000;i++){
@@ -37,10 +38,12 @@ public class SumOdd {
             }
         }
         System.out.println("1-10000是7的倍数个数为："+counter+"\t和为："+sum);
+        System.out.println("时间"+(System.nanoTime()-startTime));
     }
 
     public static void shuixianhua(){
         System.out.println("************************");
+        Long startTime = System.nanoTime();
         System.out.println("水仙花数");
         int counter = 0;
         for(int i=100;i<1000;i++){
@@ -50,12 +53,14 @@ public class SumOdd {
             }
         }
         System.out.println("共有"+counter+"个水仙花数");
+        System.out.println("时间"+(System.nanoTime()-startTime));
     }
 
     /**
      * 吸血鬼数：1260=21*60
      */
     public static void xixuegui(){
+        Long startTime = System.nanoTime();
         for(int i = 1000;i<10000;i++){
             char[] four = String.valueOf(i).toCharArray();
             String a = String.valueOf(four[0]);
@@ -88,6 +93,7 @@ public class SumOdd {
                 System.out.println("吸血鬼数："+i+"="+d+a+"*"+c+b);
             }
         }
+        System.out.println("时间"+(System.nanoTime()-startTime));
     }
 
 

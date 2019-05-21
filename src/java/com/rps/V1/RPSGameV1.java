@@ -58,6 +58,9 @@ public class RPSGameV1 {
                             case -1:
                                 System.out.print("真遗憾，惜败！");
                                 break;
+                            default:
+                                System.out.println("出错了！");
+                                break;
                         }
                         System.out.print("是否继续猜拳？（Y/N）：");
                         isContinue = input.next();
@@ -124,31 +127,15 @@ public class RPSGameV1 {
 
     //
     public int judgeWL(int playerFist,int bootFist){
-        if(playerFist==1&&bootFist==1){
+        if((playerFist==1&&bootFist==1)||(playerFist==2&&bootFist==2)||(playerFist==3&&bootFist==3)){
             return 0;
-        }else if(playerFist==1&&bootFist==2){
+        }else if((playerFist==1&&bootFist==2)||(playerFist==2&&bootFist==3)||(playerFist==3&&bootFist==1)){
             RPSGameV1.PLAYERSCORE++;
             return 1;
-        }else if(playerFist==1&&bootFist==3){
+        }else if((playerFist==2&&bootFist==1)||(playerFist==3&&bootFist==2)||(playerFist==1&&bootFist==3)){
             RPSGameV1.BOOTSCORE++;
             return -1;
-        }else if(playerFist==2&&bootFist==1){
-            RPSGameV1.BOOTSCORE++;
-            return -1;
-        }else if(playerFist==2&&bootFist==2){
-            return 0;
-        }else if(playerFist==2&&bootFist==3){
-            RPSGameV1.PLAYERSCORE++;
-            return 1;
-        }else if(playerFist==3&&bootFist==1){
-            RPSGameV1.PLAYERSCORE++;
-            return 1;
-        }else if(playerFist==3&&bootFist==2){
-            RPSGameV1.BOOTSCORE++;
-            return -1;
-        }else if(playerFist==3&&bootFist==3){
-            return 0;
-        }else {
+        } else {
             return 2;
         }
     }
