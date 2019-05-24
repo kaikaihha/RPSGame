@@ -1,6 +1,6 @@
-package com.rps.v2.pojo.ex;
+package com.rps.v2pro.pojo.ex;
 
-import com.rps.v2.pojo.Player;
+import com.rps.v2pro.pojo.Player;
 
 public class Boot extends Player {
 

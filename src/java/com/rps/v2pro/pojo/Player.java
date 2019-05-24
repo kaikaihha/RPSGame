@@ -1,4 +1,4 @@
-package com.rps.v2.pojo;
+package com.rps.v2pro.pojo;
 
 public class Player {
     private int score;
