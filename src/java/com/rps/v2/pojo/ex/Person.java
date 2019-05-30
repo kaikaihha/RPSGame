@@ -13,8 +13,8 @@ public class Person extends Player {
     String name="玩家";
 
     public void show(Scanner scanner) {
-        String playerFist = scanner.next();
-        switch (playerFist){
+        String pFist = scanner.next();
+        switch (pFist){
             case "1":
                 System.out.print("你出了石头");
                 break;
@@ -29,7 +29,7 @@ public class Person extends Player {
                 show(scanner);
 
         }
-        this.setFist(Integer.valueOf(playerFist));
+        this.setFist(Integer.valueOf(pFist));
     }
 
 }

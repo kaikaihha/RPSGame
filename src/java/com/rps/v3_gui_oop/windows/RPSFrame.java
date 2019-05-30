@@ -1,16 +1,17 @@
-package com.rps.v3_gui.windows;
+package com.rps.v3_gui_oop.windows;
 
+import com.rps.v3_gui_oop.pojo.impl.Boot;
+import com.rps.v3_gui_oop.pojo.impl.Person;
+import com.rps.v3_gui_oop.service.GameImpl;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class GameFrame extends JFrame implements ActionListener {
-
-
-    private int pF;
-    private int bF;
+public class RPSFrame extends JFrame implements ActionListener {
+    private Person person;
+    private Boot boot;
+    private int count;
 
     private JButton qBtn;
     private JButton jBtn;
@@ -29,15 +30,11 @@ public class GameFrame extends JFrame implements ActionListener {
     private JLabel img_vs;
     private JLabel img_two;
 
-    public int getpF() {
-        return pF;
-    }
-
-    public void setpF(int pF) {
-        this.pF = pF;
-    }
-
     public void init(){
+
+        person = new Person();
+        boot = new Boot();
+
         this.setResizable(false);
         this.setTitle("猜拳游戏");
         this.setLayout(null);
@@ -86,6 +83,11 @@ public class GameFrame extends JFrame implements ActionListener {
         bBtn.setBounds(40,370,50,50);
         this.add(bBtn);
 
+        restartBtn = new JButton("重新开始");
+        restartBtn.setBounds(440,400,90,40);
+
+        this.add(restartBtn);
+
         this.setLocationRelativeTo(null);
         this.setVisible(true);
         registActionlistenner();
@@ -99,58 +101,58 @@ public class GameFrame extends JFrame implements ActionListener {
         qBtn.addActionListener(this);
         jBtn.addActionListener(this);
         bBtn.addActionListener(this);
+        restartBtn.addActionListener(this);
     }
 
-    @Override
     public void actionPerformed(ActionEvent e) {
         JButton jButton = (JButton)e.getSource();
         if(qBtn==jButton){
             this.setImg(pFist,new ImageIcon("src/java/com/rps/v3_gui/img/q.png"));
-            pF = 1;
+            person.fist = 1;
             bootShow();
             showResult();
         }else if(jBtn==jButton){
             this.setImg(pFist,new ImageIcon("src/java/com/rps/v3_gui/img/j.png"));
-            pF = 2;
+            person.fist = 2;
             bootShow();
             showResult();
         }else if(bBtn==jButton){
             this.setImg(pFist,new ImageIcon("src/java/com/rps/v3_gui/img/b.png"));
-            pF = 3;
+            person.fist = 3;
             bootShow();
             showResult();
+        }else if(restartBtn == jButton){
+            this.setImg(pFist,new ImageIcon("src/java/com/rps/v3_gui/img/b.png"));
+            this.setImg(bFist,new ImageIcon("src/java/com/rps/v3_gui/img/b.png"));
+            this.setImg(result,new ImageIcon("src/java/com/rps/v3_gui/img/z.png"));
+            boot.score = 0;
+            person.score = 0;
+            count = 0;
+
         }
     }
 
     public void bootShow(){
-        bF = 1+(int)(Math.random()*10)%3;
-        if(bF==1){
+        boot.showFist();
+        if(boot.fist==1){
             this.setImg(bFist,new ImageIcon("src/java/com/rps/v3_gui/img/q.png"));
-        }else if(bF==2){
+        }else if(boot.fist==2){
             this.setImg(bFist,new ImageIcon("src/java/com/rps/v3_gui/img/j.png"));
-        }else if(bF==3){
+        }else if(boot.fist==3){
             this.setImg(bFist,new ImageIcon("src/java/com/rps/v3_gui/img/b.png"));
         }
     }
 
     public void showResult(){
-        if((pF==1&&bF==1)||(pF==2&&bF==2)||(pF==3&&bF==3)){
+        int judgeResult = new GameImpl().judge(person.fist,boot.fist);
+        if(judgeResult==1){
             setImg(result,new ImageIcon("src/java/com/rps/v3_gui/img/z.png"));
-        }else if((pF==1&&bF==2)||(pF==2&&bF==3)||(pF==3&&bF==1)){
+        }else if(judgeResult==2){
             setImg(result,new ImageIcon("src/java/com/rps/v3_gui/img/w.png"));
-        }else if((pF==2&&bF==1)||(pF==3&&bF==2)||(pF==1&&bF==3)){
+            person.score = person.score + 1;
+        }else if(judgeResult==3){
             setImg(result,new ImageIcon("src/java/com/rps/v3_gui/img/h.png"));
+            boot.score = boot.score + 1;
         }
-    }
-
-
-}
-class Main{
-    public static void main(String[] args) {
-        GameFrame gameFrame = new GameFrame();
-        gameFrame.init();
-
-
-
     }
 }

@@ -45,7 +45,7 @@ public class MyFrame extends JFrame implements ActionListener {
         btnPanel.add(first);
         btnPanel.add(end);
 
-        registerActionlistenner();
+        registActionlistenner();
 
         Container container = getContentPane();
 
@@ -68,7 +68,7 @@ public class MyFrame extends JFrame implements ActionListener {
         }
     }
 
-    private void registerActionlistenner(){
+    private void registActionlistenner(){
         up.addActionListener(this);
         down.addActionListener(this);
         first.addActionListener(this);

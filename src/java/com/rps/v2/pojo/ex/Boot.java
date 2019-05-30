@@ -6,8 +6,8 @@ public class Boot extends Player {
 
     @Override
     public void show() {
-        int bootFist = 1+(int)(Math.random()*10)%3;
-        switch (bootFist){
+        int bFist = 1+(int)(Math.random()*10)%3;
+        switch (bFist){
             case 1:
                 System.out.println("\n电脑出石头");
                 break;
@@ -18,6 +18,6 @@ public class Boot extends Player {
                 System.out.println("\n电脑出布");
                 break;
         }
-        this.setFist(Integer.valueOf(bootFist));
+        this.setFist(Integer.valueOf(bFist));
     }
 }

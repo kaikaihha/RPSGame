@@ -110,8 +110,8 @@ public class RPSGameV1 {
     //玩家出拳
     public int playerShow(Scanner scanner){
         System.out.print("你出了：");
-        int playerFist = scanner.nextInt();
-        switch (playerFist){
+        int pFist = scanner.nextInt();
+        switch (pFist){
             case 1:
                 System.out.print("你出了石头");
                 break;
@@ -122,17 +122,17 @@ public class RPSGameV1 {
                 System.out.print("你出了布");
                 break;
         }
-        return playerFist;
+        return pFist;
     }
 
     //
-    public int judgeWL(int playerFist,int bootFist){
-        if((playerFist==1&&bootFist==1)||(playerFist==2&&bootFist==2)||(playerFist==3&&bootFist==3)){
+    public int judgeWL(int pFist,int bFist){
+        if((pFist==1&&bFist==1)||(pFist==2&&bFist==2)||(pFist==3&&bFist==3)){
             return 0;
-        }else if((playerFist==1&&bootFist==2)||(playerFist==2&&bootFist==3)||(playerFist==3&&bootFist==1)){
+        }else if((pFist==1&&bFist==2)||(pFist==2&&bFist==3)||(pFist==3&&bFist==1)){
             RPSGameV1.PLAYERSCORE++;
             return 1;
-        }else if((playerFist==2&&bootFist==1)||(playerFist==3&&bootFist==2)||(playerFist==1&&bootFist==3)){
+        }else if((pFist==2&&bFist==1)||(pFist==3&&bFist==2)||(pFist==1&&bFist==3)){
             RPSGameV1.BOOTSCORE++;
             return -1;
         } else {
