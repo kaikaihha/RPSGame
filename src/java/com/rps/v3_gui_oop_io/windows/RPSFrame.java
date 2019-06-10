@@ -1,19 +1,24 @@
-package com.rps.v3_gui_oop.windows;
+package com.rps.v3_gui_oop_io.windows;
 
-import com.rps.v3_gui_oop.pojo.impl.Boot;
-import com.rps.v3_gui_oop.pojo.impl.Person;
-import com.rps.v3_gui_oop.service.GameImpl;
+import com.rps.v3_gui_oop_io.pojo.impl.Boot;
+import com.rps.v3_gui_oop_io.pojo.impl.Person;
+import com.rps.v3_gui_oop_io.service.Game;
+import com.rps.v3_gui_oop_io.service.GameImpl;
+import com.rps.v3_gui_oop_io.util.StringUtil;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Map;
 
 public class RPSFrame extends JFrame implements ActionListener {
     private Person person;
     private Boot boot;
-    private int count;
+    private int count = 0;
 
     private JButton qBtn;
     private JButton jBtn;
@@ -32,16 +37,26 @@ public class RPSFrame extends JFrame implements ActionListener {
     private JLabel img_vs;
     private JLabel img_two;
 
-    public void init(){
+    private JMenuBar jMenuBar;
+    private JMenu jMenu;
+    private JMenuItem jMenuItem;
+
+
+    public void init(String userName,String pass){
 
         person = new Person();
         boot = new Boot();
+
+        person.name = userName;
+        person.pass = pass;
+
+        boot.name = "boot";
 
         this.setResizable(false);
         this.setTitle("猜拳游戏");
         this.setLayout(null);
 
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
         this.setSize(550,500);
 
         playerAvatar = new JLabel(new ImageIcon("src/java/com/rps/v3_gui/img/player.png"));
@@ -87,8 +102,33 @@ public class RPSFrame extends JFrame implements ActionListener {
 
         restartBtn = new JButton("重新开始");
         restartBtn.setBounds(440,400,90,40);
-
         this.add(restartBtn);
+
+//        ****************************
+        jMenuBar = new JMenuBar();
+        this.setJMenuBar(jMenuBar);
+
+        jMenu = new JMenu();
+        jMenu.setText("用户");
+
+        jMenuItem = new JMenuItem();
+        jMenuItem.setText("排行榜");
+        jMenuItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                /*JOptionPane.showMessageDialog(null, "********游戏结束********\n"+person.name+
+                    "      VS      "+boot.name+
+                    "\n********************\n"+"你的分数："+person.score, "游戏结果\n", JOptionPane.INFORMATION_MESSAGE);*/
+                String str = new GameImpl().read();
+                System.out.println(str);
+                String order = new StringUtil().strDivideSort(str);
+                JOptionPane.showMessageDialog(null, "********排行榜********\n"+order, "排行榜\n", JOptionPane.INFORMATION_MESSAGE);
+            }
+        });
+
+
+        jMenu.add(jMenuItem);
+        jMenuBar.add(jMenu);
 
         this.setLocationRelativeTo(null);
         this.setVisible(true);
@@ -96,9 +136,17 @@ public class RPSFrame extends JFrame implements ActionListener {
         this.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
-                System.out.println("用户分数"+person.score);
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                String format = simpleDateFormat.format(new Date());
+                JOptionPane.showMessageDialog(null, "********游戏结束********\n"+person.name+
+                        "      VS      "+boot.name+
+                        "\n********************\n"+"你的分数："+person.score, "游戏结果\n", JOptionPane.INFORMATION_MESSAGE);
+                Game game = new GameImpl();
+                game.write(format+"$"+person.name+"$"+person.score+"#");
+                //game.read();
             }
         });
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
     public void setImg(JLabel jLabel,ImageIcon img){
@@ -136,7 +184,6 @@ public class RPSFrame extends JFrame implements ActionListener {
             boot.score = 0;
             person.score = 0;
             count = 0;
-
         }
     }
 
@@ -162,5 +209,7 @@ public class RPSFrame extends JFrame implements ActionListener {
             setImg(result,new ImageIcon("src/java/com/rps/v3_gui/img/h.png"));
             boot.score = boot.score + 1;
         }
+        count ++;
     }
 }
+
